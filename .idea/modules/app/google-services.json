@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "616459719686",
+    "firebase_url": "https://bunksquad-893fc.firebaseio.com",
+    "project_id": "bunksquad-893fc",
+    "storage_bucket": "bunksquad-893fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616459719686:android:c91f2a213ba9d5c1e59f87",
+        "android_client_info": {
+          "package_name": "com.socialapp.antariksh.bunksquad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616459719686-rncjqduigaf9ko3bf5408jjbjeb51t6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialapp.antariksh.bunksquad",
+            "certificate_hash": "e8662a776288442c3ae94e38fde0c15fbe48a16f"
+          }
+        },
+        {
+          "client_id": "616459719686-9v07mnb0ib7lqp24q76vg2ffdjeonpj8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz8q3qbcxpKG4MBYLJ8HtKYYITGUYLW18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616459719686-9v07mnb0ib7lqp24q76vg2ffdjeonpj8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

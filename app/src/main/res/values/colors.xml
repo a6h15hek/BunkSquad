@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#292c2f</color>
+    <color name="colorPrimaryDark">#34373b</color>
+    <color name="colorAccent">#5383d3</color>
+    <color name="colorMainScreenWhite">#f5f5f5</color>
+
+    <color name="colorLogoPrimary">#ffffff</color>
+    <color name="colorLogoSecondary">#5383d3</color>
+    <color name="colorHeaderBackground">#292c2f</color>
+
+    <color name="colorBottomNavBackground">#292c2f</color>
+    <color name="colorBottomNavTextColor">#ffffff</color>
+    <color name="colorBottomNavTextColorActive">#5383d3</color>
+
+    <color name="colorCalculatorButtonCal">#3f3f3f</color>
+    <color name="colorCalculatorPressedButtonCal">#808080</color>
+    <color name="colorCalculatorButtonText">#ffffff</color>
+    <color name="colorTextBoxCalculator">#303030</color>
+
+    <color name="colorUnselectedBorderColor">#4f5354</color>
+    <color name="colorSelectedBorderColor">#3419ac</color>
+
+    <color name="colorSubHeadingColor">#28324d</color>
+
+    <color name="calResultChartBgGrey">#4f5354</color>
+    <color name="calResultChartBgRed">#e53935</color>
+    <color name="calResultChartBgYellow">#ffb200</color>
+    <color name="calResultChartBgPurple">#8d4de9</color>
+    <color name="calResultChartBgGreen">#5bb381</color>
+    <color name="calResultChartBgDarkPurple">#441e59</color>
+    <color name="calResultChartBgOrange">#f77e01</color>
+    <color name="calResultChartBgBlue">#4961e1</color>
+
+    <color name="colorFaintRedColor">#ffb8c2</color>
+    <color name="colorFaintBlueColor">#b8ccff</color>
+
+
+    <color name="textColorWhite">#ffffff</color>
+    <color name="textColorBlack">#292c2f</color>
+
+    <color name="colorAccentClick">#3c5f99</color>
+
+    <color name="colorPurpleShadeWhite">#EEEEFF</color>
+    <color name="colorRedShadeWhite">#ffe4e1</color>
+
+    <color name="secondLayerOfWhite">#fDfDfD</color>
+
+</resources>

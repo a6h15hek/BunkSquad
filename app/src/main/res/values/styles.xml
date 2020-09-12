@@ -1,0 +1,79 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="styleHeaderLogo">
+        <!--<item name="fontFamily">@font/cookie_regular</item>-->
+        <item name="android:textSize">28dp</item>
+        <item name="android:paddingTop">0dp</item>
+    </style>
+
+    <style name="styleMainHeaderLogo">
+        <item name="fontFamily">@font/cookie_regular</item>
+        <item name="android:textSize">40dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="bottomNavActive" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="colorOnPrimary">@color/colorLogoSecondary</item>
+    </style>
+    <style name="bottomNavInactive">
+    </style>
+
+    <style name="numberButtonCalculator">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">80dp</item>
+        <!---<item name="android:background">@color/colorCalculatorButtonCal</item>-->
+        <item name="android:background">@drawable/cal_btn_click_effect</item>
+        <item name="android:textSize">32dp</item>
+        <item name="android:textColor">@color/colorCalculatorButtonText</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
+    <style name="ActionButtonCalculator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/cal_btn_click_effect</item>
+        <item name="android:textSize">32dp</item>
+        <item name="android:textColor">@color/colorCalculatorButtonText</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
+
+    <style name="textBoxCalculator">
+        <item name="android:background">@drawable/rectangular_border</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <style name="TextInputInCalculator">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">42dp</item>
+        <item name="android:textColor">@color/colorTextBoxCalculator</item>
+    </style>
+
+    <style name="SubHeadingStyle">
+        <item name="android:textSize">28dp</item>
+        <item name="android:textColor">@color/colorSubHeadingColor</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">normal</item>
+        <!--item name="fontFamily">@font/balsamiq_sans_regular</item-->
+    </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Gets rid of the search icon -->
+        <item name="searchIcon">@color/textColorWhite</item>
+
+    </style>
+</resources>

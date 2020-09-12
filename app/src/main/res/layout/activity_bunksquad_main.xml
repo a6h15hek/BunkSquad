@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BunksquadMainActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/mainScreenContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/mainScreenBottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+            app:menu="@menu/main_bottom_navigation_menu"
+            app:itemIconSize="22dp"
+            app:labelVisibilityMode="labeled"
+            app:itemTextAppearanceActive="@style/bottomNavActive"
+            app:itemTextAppearanceInactive="@style/bottomNavInactive"
+            app:itemRippleColor="@color/colorAccent"
+            android:elevation="10dp" />
+    </FrameLayout>
+</RelativeLayout>

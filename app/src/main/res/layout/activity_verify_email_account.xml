@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerifyEmailAccountActivity"
+    android:orientation="vertical"
+    android:background="@color/colorMainScreenWhite">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:background="@color/colorHeaderBackground">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Welcome to "
+                android:textColor="@color/calResultChartBgOrange"
+                android:textSize="30dp"
+                android:textStyle="normal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Bunk"
+                android:textColor="@color/colorLogoPrimary"
+                style="@style/styleMainHeaderLogo" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Squad"
+                android:textColor="@color/colorAccent"
+                style="@style/styleMainHeaderLogo"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="-13dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SignIn to Continue"
+                android:textColor="@color/textColorWhite"
+                android:textSize="16dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="-140dp"
+        android:background="@drawable/round_corner_layout_light_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ProgressBar
+                android:id="@+id/loadingProgressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:text="SignIn"
+                android:textColor="@color/textColorBlack"
+                android:textSize="28dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/verifyEmailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_mail_outline_black_96dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Your Account is Not Verified"
+                android:textSize="24dp"
+                android:textColor="@color/textColorBlack"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Verify your account to continue. We sent an email to you at"
+                android:textSize="16dp"
+                android:layout_marginHorizontal="20dp"/>
+            <TextView
+                android:id="@+id/userEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="/@email.com"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:textColor="@color/colorPrimaryDark"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:text="It has link that'll verify your BunkSquad account. Click on link to verify."
+                android:layout_marginHorizontal="20dp"/>
+            <Button
+                android:id="@+id/iHaveVerifiedContinue"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/colorAccent"
+                android:elevation="1dp"
+                android:text="I have Verified. Continue"
+                android:textColor="@color/textColorBlack"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/sendEmailVerification"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/colorAccent"
+                android:elevation="1dp"
+                android:text="Send Verification email again"
+                android:textColor="@color/textColorBlack"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/signOutButton"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/colorAccent"
+                android:elevation="1dp"
+                android:text="Sign out"
+                android:textColor="@color/textColorBlack"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

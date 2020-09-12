@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">BunkSquad</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="report_msg_attend1">You should Attend </string>
+    <string name="report_msg_attend2"> Classes to Achieve </string>
+    <string name="report_msg_attend3">% Attendance.</string>
+
+    <string name="report_msg_bunk1">You can bunk </string>
+    <string name="report_msg_bunk2"> Classes maintaining </string>
+    <string name="report_msg_bunk3">% Attendance.</string>
+
+    <string name="MONDAY">true</string>
+    <string name="TUESDAY">true</string>
+    <string name="WEDNESDAY">true</string>
+    <string name="THURSDAY">true</string>
+    <string name="FRIDAY">true</string>
+    <string name="SATURDAY">false</string>
+    <string name="SUNDAY">false</string>
+    <string name="hourOfDay">16</string>
+    <string name="minute">00</string>
+    <string name="dailyMarkingReminder">false</string>
+</resources>

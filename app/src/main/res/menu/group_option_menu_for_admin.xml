@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/votingPollsHistory"
+        android:enabled="true"
+        android:title="Polls History" />
+    <item
+        android:id="@+id/changeGroupNameOption"
+        android:enabled="true"
+        android:title="Change Group Name" />
+    <item
+        android:id="@+id/leaveGroupOption"
+        android:enabled="true"
+        android:title="Leave Group" />
+    <item
+        android:id="@+id/deleteGroupOption"
+        android:enabled="true"
+        android:title="Delete group" />
+</menu>
