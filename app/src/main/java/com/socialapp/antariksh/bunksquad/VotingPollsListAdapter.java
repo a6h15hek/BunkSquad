@@ -3,6 +3,7 @@ package com.socialapp.antariksh.bunksquad;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,8 +26,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -43,21 +50,26 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
     private Context context;
     FirebaseFirestore fireStoreDB;
     FirebaseUser bunkSquadUser;
+    SharedPreferences sharedPref;
     public VotingPollsListAdapter(@NonNull FirestoreRecyclerOptions<VotingPollData> options, Context context, FirebaseUser bunkSquadUser) {
         super(options);
         this.context=context;
         this.fireStoreDB = FirebaseFirestore.getInstance();
         this.bunkSquadUser = bunkSquadUser;
+        this.sharedPref = context.getSharedPreferences("PollsDataSharedPref",context.MODE_PRIVATE);
     }
     private String optionColor[] = {"#e53935","#8d4de9","#ffb200","#5bb381","#4f5354"};
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    protected void onBindViewHolder(@NonNull PollsViewHolder holder, int position, @NonNull VotingPollData poll) {
+    protected void onBindViewHolder(@NonNull final PollsViewHolder holder, int position, @NonNull VotingPollData poll) {
+
         holder.titleOfPoll.setText(Html.fromHtml("<font color='#8d4de9'><b>Q. </b></font>" +poll.getTitle()));
         HashMap<String,Object> voteData = null;
         if(poll.getVote() != null){
             voteData = (HashMap<String, Object>) poll.getVote().get(bunkSquadUser.getUid());
         }
+        final String documentId = getSnapshots().getSnapshot(position).getId();
+        Log.d(TAG, "onBindViewHolder: "+documentId);
         setHeightOfOptionList(((List<Object>)poll.getOptionAnswer()).size(),holder.heightOfOptionList);
         if(poll.getIsOn()){
             if((poll.getLastDate().getSeconds()+3600)<=Timestamp.now().getSeconds()){
@@ -74,11 +86,12 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
                     }
                 });
             }else if(poll.getLastDate().getSeconds()<=Timestamp.now().getSeconds()){
-                //show the results
-                holder.optionList.setAdapter(new answerOptionList(context, poll.getOptionAnswer(),getSnapshots().getSnapshot(position).getId(),bunkSquadUser,voteData,poll.getNumberOfVotes(),true));
+                //show the results, option selection will not work
+                sharedPref.edit().putBoolean("RS"+documentId,false).apply();
+                holder.optionList.setAdapter(new answerOptionList(context, poll.getOptionAnswer(),documentId,bunkSquadUser,voteData,poll.getNumberOfVotes(),true));
                 holder.statusOfPoll.setVisibility(View.VISIBLE);
             }else{
-                holder.optionList.setAdapter(new answerOptionList(context, poll.getOptionAnswer(),getSnapshots().getSnapshot(position).getId(),bunkSquadUser,voteData,poll.getNumberOfVotes(),false));
+                holder.optionList.setAdapter(new answerOptionList(context, poll.getOptionAnswer(),documentId,bunkSquadUser,voteData,poll.getNumberOfVotes(),false));
                 holder.statusOfPoll.setVisibility(View.GONE);
             }
         }
@@ -98,25 +111,63 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
                 context.startActivity(intent);
             }
         });
-        Log.d(TAG, "onBindViewHolder: last date "+poll.getLastDate());
-        Log.d(TAG, "onBindViewHolder: current : "+Timestamp.now());
         holder.rankView.setText(Html.fromHtml(getRankString(poll.getNumberOfVotes())));
-
-
-//        if(poll.getIsOn()&&poll.getLastDate().getSeconds()<=Timestamp.now().getSeconds()){
-//            DocumentReference pollsDocument=fireStoreDB.collection("BunkSquadVoting").document(getSnapshots().getSnapshot(position).getId());
-//            pollsDocument.update("isOn",false).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if(task.isSuccessful()){
-//                        Toast.makeText(context, "update successful.", Toast.LENGTH_SHORT).show();
-//                    }else{
-//                        Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
+        //Log.d(TAG, "onBindViewHolder: "+sharedPref.getBoolean("RS"+documentId, false));
+//        Map<String, ?> allEntries = sharedPref.getAll();
+//        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+//            Log.d(TAG, "key and value : "+entry.getKey() + ": " + entry.getValue().toString());
 //        }
+        if(sharedPref.getBoolean("RS"+documentId, false)){
+            holder.showResultSwitch.setChecked(true);
+            holder.heightOfOptionList.setVisibility(View.GONE);
+            holder.pieChartLayoutView.setVisibility(View.VISIBLE);
+        }else{
+            holder.showResultSwitch.setChecked(false);
+            holder.heightOfOptionList.setVisibility(View.VISIBLE);
+            holder.pieChartLayoutView.setVisibility(View.GONE);
+        }
+        holder.showResultSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                if(isChecked){
+                    editor.putBoolean("RS"+documentId,true);
+                    holder.heightOfOptionList.setVisibility(View.GONE);
+                    holder.pieChartLayoutView.setVisibility(View.VISIBLE);
+                }else{
+                    editor.putBoolean("RS"+documentId,false);
+                    holder.heightOfOptionList.setVisibility(View.VISIBLE);
+                    holder.pieChartLayoutView.setVisibility(View.GONE);
+                }
+                editor.apply();
+                Log.d(TAG, "onBindViewHolder on click: "+documentId+" "+sharedPref.getBoolean("RS"+documentId, false));
+            }
+        });
+        holder.resultDataChart.setCenterText("Result");
+        PieDataSet pieDataSet = new PieDataSet(setPieChartData(poll.getNumberOfVotes(),poll.getOptionAnswer()),"");
+        int[] colorArray = new int[]{Color.parseColor("#e53935"),Color.parseColor("#8d4de9"),Color.parseColor("#ffb200"),Color.parseColor("#5bb381"),Color.parseColor("#4f5354")};
+        pieDataSet.setColors(colorArray);
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setValueTextSize(17);
+        pieData.setValueTextColor(Color.parseColor("#ffffff"));
+        pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
+        holder.resultDataChart.setCenterTextSize(22);
+        holder.resultDataChart.setDrawEntryLabels(false);
+        holder.resultDataChart.getLegend().setTextSize(18);
+        holder.resultDataChart.getLegend().setWordWrapEnabled(true);
+        holder.resultDataChart.getDescription().setEnabled(false);
+        holder.resultDataChart.setData(pieData);
+
     }
+
+    private ArrayList<PieEntry> setPieChartData(List<Integer> numberOfVotes, List<Object> optionAnswer){
+        ArrayList<PieEntry> dataVals = new ArrayList<PieEntry>();
+        for(int i=0;i<numberOfVotes.size();i++){
+            dataVals.add(new PieEntry(numberOfVotes.get(i),(String) optionAnswer.get(i)));
+        }
+        return dataVals;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String getRankString(List<Integer> votes){
         String numFont[] = {"➊","➋","➌","➍","➎"};
@@ -166,7 +217,9 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
     class PollsViewHolder extends RecyclerView.ViewHolder {
         TextView titleOfPoll,descriptionOfPoll,groupName,secondDescriptionPoll,rankView,statusOfPoll;
         ListView optionList;
-        LinearLayout heightOfOptionList,showMoreButton;
+        LinearLayout heightOfOptionList,showMoreButton,pieChartLayoutView;
+        PieChart resultDataChart;
+        SwitchMaterial showResultSwitch;
         public PollsViewHolder(@NonNull View itemView) {
             super(itemView);
             titleOfPoll = itemView.findViewById(R.id.titleOfPoll);
@@ -178,6 +231,9 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
             secondDescriptionPoll = itemView.findViewById(R.id.secondDescriptionOfPoll);
             rankView = itemView.findViewById(R.id.rankView);
             statusOfPoll = itemView.findViewById(R.id.statusOfPoll);
+            resultDataChart = itemView.findViewById(R.id.pollsResultChart);
+            showResultSwitch = itemView.findViewById(R.id.showResultSwitch);
+            pieChartLayoutView = itemView.findViewById(R.id.pieChartLayoutView);
         }
     }
 

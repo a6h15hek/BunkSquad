@@ -354,6 +354,8 @@ public class VotingFragment extends Fragment {
                         }else{
                             NoGroupPresent.setVisibility(View.VISIBLE);
                             setGroupListOnView(groupArray);
+                            groupIdList.clear();
+                            initPollsListAdapter();
                         }
                     }else{
                         groupArray=new ArrayList<Object>();
@@ -533,6 +535,7 @@ public class VotingFragment extends Fragment {
         groupListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
     private void initPollsListAdapter(){
+        groupIdList.add("ThisTextIsToMakeListNonEmpty");
         Query query = fireStoreDB.collection("BunkSquadVoting")
                 .whereIn("groupId",groupIdList)
                 .whereEqualTo("isOn",true);

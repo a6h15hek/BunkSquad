@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:textSize="24dp"
             android:textColor="@color/calResultChartBgGrey"
-            android:text=""/>
+            android:text="Question Question Question Question"/>
         <TextView
             android:id="@+id/descriptionOfPoll"
             android:layout_width="match_parent"
@@ -67,13 +67,33 @@
     <LinearLayout
         android:id="@+id/heightOfOptionList"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:orientation="vertical">
         <ListView
             android:id="@+id/answerOptionListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pieChartLayoutView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f9f9f9">
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pollsResultChart"
+            android:layout_width="match_parent"
+            android:layout_height="260dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/showResultSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             />
     </LinearLayout>
     <LinearLayout
@@ -92,6 +112,7 @@
                 android:textSize="28dp"
                 android:text=""/>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/showMoreDetails"
             android:layout_width="match_parent"
@@ -110,12 +131,5 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pollsResultChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"/>
-    </LinearLayout>
+
 </LinearLayout>

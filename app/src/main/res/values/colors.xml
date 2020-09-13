@@ -45,5 +45,11 @@
     <color name="colorRedShadeWhite">#ffe4e1</color>
 
     <color name="secondLayerOfWhite">#fDfDfD</color>
+    
+    <color name="optionRed">#e53935</color>
+    <color name="optionPurple">#8d4de9</color>
+    <color name="optionYellow">#ffb200</color>
+    <color name="optionGreen">#5bb381</color>
+    <color name="optionGrey">#4f5354</color>
 
 </resources>
