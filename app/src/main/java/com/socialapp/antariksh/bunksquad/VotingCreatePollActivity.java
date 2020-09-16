@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,8 +32,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -70,7 +74,13 @@ public class VotingCreatePollActivity extends AppCompatActivity {
         firestoreDB=FirebaseFirestore.getInstance();
         bunkSquadUser = FirebaseAuth.getInstance().getCurrentUser();
 
-
+        //back Button click listener
+        findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ((TextView)findViewById(R.id.groupName)).setText(getIntent().getStringExtra("GroupName"));
         setAnswerOptionButton();
@@ -104,13 +114,24 @@ public class VotingCreatePollActivity extends AppCompatActivity {
                                             @Override
                                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                                 validityInputDateTime.set(year,monthOfYear,dayOfMonth,hourOfDay,minute);
-                                                validityInput.setText(String.valueOf(validityInputDateTime.getTime()));
+                                                Calendar calendarTemp1hour = Calendar.getInstance();
+                                                calendarTemp1hour.set(Calendar.MINUTE,calendarTemp1hour.get(Calendar.MINUTE)+60);
+                                                if(validityInputDateTime.after(calendarTemp1hour)){
+                                                    validityInput.setText(String.valueOf(validityInputDateTime.getTime()));
+                                                    descriptionInputLayout.setErrorEnabled(false);
+                                                    titleInputLayout.setErrorEnabled(false);
+                                                    validityInputLayout.setErrorEnabled(false);
+                                                }else{
+                                                    descriptionInputLayout.setErrorEnabled(false);
+                                                    titleInputLayout.setErrorEnabled(false);
+                                                    validityInputLayout.setError("Select validity to future time.");
+                                                }
                                             }
                                         }, mHour, mMinute, false);
                                 timePickerDialog.show();
                             }
                         }, mYear, mMonth, mDay);
-                presentTime.set(Calendar.DATE,presentTime.get(Calendar.DATE)+1);
+                presentTime.set(Calendar.DATE,presentTime.get(Calendar.DATE));
                 datePickerDialog.getDatePicker().setMinDate(presentTime.getTimeInMillis());
                 presentTime.set(Calendar.DATE,presentTime.get(Calendar.DATE)+7);
                 datePickerDialog.getDatePicker().setMaxDate(presentTime.getTimeInMillis());
@@ -218,6 +239,7 @@ public class VotingCreatePollActivity extends AppCompatActivity {
                 pollsInfo.put("description",descriptionInput.getText().toString());
                 pollsInfo.put("lastDate",validityInputDateTime.getTime());
                 pollsInfo.put("createdBy",bunkSquadUser.getDisplayName());
+                pollsInfo.put("createdById",bunkSquadUser.getUid());
                 pollsInfo.put("createdOn", Timestamp.now());
                 pollsInfo.put("isOn",true);//on,off,result
 
@@ -233,6 +255,7 @@ public class VotingCreatePollActivity extends AppCompatActivity {
 
                 WriteBatch batch = firestoreDB.batch();
                 batch.set(pollInfoDoc,pollsInfo);
+                
                 batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

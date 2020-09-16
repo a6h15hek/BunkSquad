@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Parcelable;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -38,7 +39,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,10 +61,10 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
         this.bunkSquadUser = bunkSquadUser;
         this.sharedPref = context.getSharedPreferences("PollsDataSharedPref",context.MODE_PRIVATE);
     }
-    private String optionColor[] = {"#e53935","#8d4de9","#ffb200","#5bb381","#4f5354"};
+    private String optionColor[] = {"#e53935","#8d4de9","#ffb200","#5bb381","#FF007F"};
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    protected void onBindViewHolder(@NonNull final PollsViewHolder holder, int position, @NonNull VotingPollData poll) {
+    protected void onBindViewHolder(@NonNull final PollsViewHolder holder, int position, @NonNull final VotingPollData poll) {
 
         holder.titleOfPoll.setText(Html.fromHtml("<font color='#8d4de9'><b>Q. </b></font>" +poll.getTitle()));
         HashMap<String,Object> voteData = null;
@@ -69,7 +72,6 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
             voteData = (HashMap<String, Object>) poll.getVote().get(bunkSquadUser.getUid());
         }
         final String documentId = getSnapshots().getSnapshot(position).getId();
-        Log.d(TAG, "onBindViewHolder: "+documentId);
         setHeightOfOptionList(((List<Object>)poll.getOptionAnswer()).size(),holder.heightOfOptionList);
         if(poll.getIsOn()){
             if((poll.getLastDate().getSeconds()+3600)<=Timestamp.now().getSeconds()){
@@ -106,17 +108,24 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, VotingPollDetailReport.class);
-//                intent.putExtra("classAttended",String.valueOf(ClassAttended));
-//                intent.putExtra("classTotal",String.valueOf(ClassTotal));
+                intent.putExtra("title",poll.getTitle());
+                intent.putExtra("description",holder.descriptionOfPoll.getText());
+                intent.putExtra("secondDescription",holder.secondDescriptionPoll.getText());
+                intent.putExtra("numberOfVotesArray", (ArrayList<Integer>) poll.getNumberOfVotes());
+                intent.putExtra("optionName", (ArrayList<Object>) poll.getOptionAnswer());
+                intent.putExtra("allVotes", (Serializable)poll.getVote());
+                intent.putExtra("groupDocumentId",poll.getGroupId());
+                intent.putExtra("documentId",documentId);
+                if((bunkSquadUser.getUid()).equals(poll.getCreatedById())){
+                    intent.putExtra("isCreator",true);
+                }else{
+                    intent.putExtra("isCreator",false);
+                }
                 context.startActivity(intent);
             }
         });
-        holder.rankView.setText(Html.fromHtml(getRankString(poll.getNumberOfVotes())));
-        //Log.d(TAG, "onBindViewHolder: "+sharedPref.getBoolean("RS"+documentId, false));
-//        Map<String, ?> allEntries = sharedPref.getAll();
-//        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-//            Log.d(TAG, "key and value : "+entry.getKey() + ": " + entry.getValue().toString());
-//        }
+        holder.rankView.setText(Html.fromHtml("● ⬤ "+getRankString(poll.getNumberOfVotes())+" ⬤ ●"));
+
         if(sharedPref.getBoolean("RS"+documentId, false)){
             holder.showResultSwitch.setChecked(true);
             holder.heightOfOptionList.setVisibility(View.GONE);
@@ -140,12 +149,11 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
                     holder.pieChartLayoutView.setVisibility(View.GONE);
                 }
                 editor.apply();
-                Log.d(TAG, "onBindViewHolder on click: "+documentId+" "+sharedPref.getBoolean("RS"+documentId, false));
             }
         });
         holder.resultDataChart.setCenterText("Result");
         PieDataSet pieDataSet = new PieDataSet(setPieChartData(poll.getNumberOfVotes(),poll.getOptionAnswer()),"");
-        int[] colorArray = new int[]{Color.parseColor("#e53935"),Color.parseColor("#8d4de9"),Color.parseColor("#ffb200"),Color.parseColor("#5bb381"),Color.parseColor("#4f5354")};
+        int[] colorArray = new int[]{Color.parseColor("#e53935"),Color.parseColor("#8d4de9"),Color.parseColor("#ffb200"),Color.parseColor("#5bb381"),Color.parseColor("#FF007F")};
         pieDataSet.setColors(colorArray);
         PieData pieData = new PieData(pieDataSet);
         pieData.setValueTextSize(17);
@@ -361,7 +369,7 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
                         PollDataUpdate.put("vote",pollVote);
                         PollDataUpdate.put("NumberOfVotes",numberOfVotes);
                         PollDataUpdate.put("VotedBy", FieldValue.arrayUnion(bunkSquadUser.getDisplayName()));
-                        pollsDocument.update(PollDataUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        pollsDocument.set(PollDataUpdate, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
@@ -377,13 +385,5 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
             }
             return listView;
         }
-        @SuppressLint("ResourceAsColor")
-        private void unSelectAllOption(TextView option, LinearLayout colorOfOption, TextView selectedOption){
-            option.setTextColor(R.color.colorPrimaryDark);
-            option.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-            colorOfOption.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.03f));
-            selectedOption.setText("");
-        }
-
     }
 }

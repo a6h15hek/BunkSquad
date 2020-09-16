@@ -50,6 +50,7 @@
     <color name="optionPurple">#8d4de9</color>
     <color name="optionYellow">#ffb200</color>
     <color name="optionGreen">#5bb381</color>
+    <color name="optionPink">#FF007F</color>
     <color name="optionGrey">#4f5354</color>
 
 </resources>

@@ -156,7 +156,7 @@ public class AttendenceManagerFragment extends Fragment {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),NOTIFICATION_REQUEST_CODE,intent,0);
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         //alarmManager.set(AlarmManager.RTC_WAKEUP,calSet.getTimeInMillis(),pendingIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calSet.getTimeInMillis(),5000,pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calSet.getTimeInMillis(),86400000,pendingIntent);
     }
     public void cancelDailyMarkingRemainder(){
         Log.i("abhishek1","cancel daily remainder");

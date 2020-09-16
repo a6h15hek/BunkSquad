@@ -329,8 +329,7 @@ public class  VotingGroupActivity extends AppCompatActivity {
 
     private void jumpToPollsHistoryActivity(){
         Intent intent = new Intent(VotingGroupActivity.this, VotingPollsHistory.class);
-//        intent.putExtra("classAttended",String.valueOf(classAttended));
-//        intent.putExtra("classTotal",String.valueOf(classTotal));
+        intent.putExtra("groupId",getIntent().getStringExtra("groupId"));
         startActivity(intent);
     }
     private void deleteGroupForAdmins() {

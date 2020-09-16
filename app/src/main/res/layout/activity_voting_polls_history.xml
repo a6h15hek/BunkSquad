@@ -31,12 +31,38 @@
                 android:id="@+id/headerMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Polls History"
+                android:text="Group Polls History"
                 android:textColor="@color/colorLogoPrimary"
                 android:textSize="24dp"
                 android:gravity="center"
                 android:paddingLeft="15dp"/>
         </LinearLayout>
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/HistoryPollsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:descendantFocusability="blocksDescendants"
+            />
+        <LinearLayout
+            android:id="@+id/NoPollsExist"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@color/colorPurpleShadeWhite">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="No more Polls."
+                android:textColor="@color/calResultChartBgPurple"
+                android:textSize="18dp"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
     <!--Content of screen-->
 </LinearLayout>

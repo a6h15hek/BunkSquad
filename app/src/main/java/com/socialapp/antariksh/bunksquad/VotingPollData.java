@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class VotingPollData {
-    private String title,groupName,description,createdBy;
+    private String title,groupName,description,createdBy,groupId,createdById;
     private List<Object> optionAnswer;
     private List<Integer> NumberOfVotes;
     private List<String> VotedBy;
@@ -15,11 +15,13 @@ public class VotingPollData {
     private Boolean isOn;
     private VotingPollData(){}
 
-    public VotingPollData(String title, String groupName, String description, String createdBy, List<Object> optionAnswer, Timestamp lastDate, HashMap<String, Object> vote, List<Integer> NumberOfVotes,Timestamp createdOn) {
+    public VotingPollData(String title, String groupName, String description, String createdBy, String groupId, String createdById, List<Object> optionAnswer, Timestamp lastDate, HashMap<String, Object> vote, List<Integer> NumberOfVotes, Timestamp createdOn) {
         this.title = title;
         this.groupName = groupName;
         this.description = description;
         this.createdBy = createdBy;
+        this.groupId = groupId;
+        this.createdById = createdById;
         this.optionAnswer = optionAnswer;
         this.lastDate = lastDate;
         this.vote = vote;
@@ -113,5 +115,21 @@ public class VotingPollData {
 
     public void setIsOn(Boolean isOn) {
         this.isOn = isOn;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getCreatedById() {
+        return createdById;
+    }
+
+    public void setCreatedById(String createdById) {
+        this.createdById = createdById;
     }
 }

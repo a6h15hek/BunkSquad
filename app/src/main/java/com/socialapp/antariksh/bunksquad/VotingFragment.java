@@ -546,9 +546,11 @@ public class VotingFragment extends Fragment {
         FirestoreRecyclerOptions<VotingPollData> options = new FirestoreRecyclerOptions.Builder<VotingPollData>()
                 .setQuery(query,VotingPollData.class)
                 .build();
-        votingPollsListAdapter = new VotingPollsListAdapter(options,getContext(),BunkSquadUser);
-        pollsListRecyclerView.setAdapter(votingPollsListAdapter);
-        votingPollsListAdapter.startListening();
+        if(getContext()!=null){
+            votingPollsListAdapter = new VotingPollsListAdapter(options,getContext(),BunkSquadUser);
+            pollsListRecyclerView.setAdapter(votingPollsListAdapter);
+            votingPollsListAdapter.startListening();
+        }
     }
 
     @Override

@@ -144,6 +144,7 @@
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        app:hintEnabled="false"
+                       app:helperText="eg. any details you want to add."
                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
                        <com.google.android.material.textfield.TextInputEditText
                            android:id="@+id/descriptionInput"
@@ -175,6 +176,7 @@
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        app:hintEnabled="false"
+                       app:helperText="always set the validity to future time."
                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
                        <com.google.android.material.textfield.TextInputEditText
                            android:id="@+id/validityInput"
