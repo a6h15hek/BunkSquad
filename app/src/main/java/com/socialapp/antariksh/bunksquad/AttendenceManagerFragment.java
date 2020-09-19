@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -172,7 +173,7 @@ public class AttendenceManagerFragment extends Fragment {
             CharSequence name = "BunkSquad Attendance Manager";
             String description = "Daily Remainder";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("BunkSquadChannelId", name, importance);
+            NotificationChannel channel = new NotificationChannel("attendanceManager198", name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -301,7 +302,7 @@ public class AttendenceManagerFragment extends Fragment {
                 ((Slider)dialogBoxAddTaskFromView.findViewById(R.id.to_achieve_attendance_slider)).addOnChangeListener(new Slider.OnChangeListener() {
                     @Override
                     public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
-                        ((TextView)dialogBoxAddTaskFromView.findViewById(R.id.slider_percentage_attendance)).setText(String.valueOf((int) value)+"%");
+                        ((TextView)dialogBoxAddTaskFromView.findViewById(R.id.slider_percentage_attendance)).setText((int)value+"%");
                     }
                 });
                 ((Button)dialogBoxAddTaskFromView.findViewById(R.id.add_task_button_dialogBox)).setOnClickListener(new View.OnClickListener() {

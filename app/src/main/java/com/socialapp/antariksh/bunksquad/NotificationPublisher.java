@@ -20,7 +20,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationPublisher extends BroadcastReceiver {
 
-    private static final String CHANNEL_ID ="BunkSquadChannelId" ;
+    private static final String CHANNEL_ID ="attendanceManager198" ;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

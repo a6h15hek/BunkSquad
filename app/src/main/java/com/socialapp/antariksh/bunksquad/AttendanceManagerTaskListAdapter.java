@@ -162,10 +162,19 @@ public class AttendanceManagerTaskListAdapter extends RecyclerView.Adapter<Atten
                                 final TextInputLayout noClassAttendedLayout=(TextInputLayout)dialogBoxEditTaskFromView.findViewById(R.id.class_attended_inputField_layout);
                                 final TextInputLayout noClassTotalLayout=(TextInputLayout)dialogBoxEditTaskFromView.findViewById(R.id.class_total_inputField_layout);
 
+                                final Slider goalPercentageAttendance = dialogBoxEditTaskFromView.findViewById(R.id.to_achieve_attendance_slider);
+                                goalPercentageAttendance.setValue(((Long) taskData.get("toAchieve")).intValue());
+                                ((TextView)dialogBoxEditTaskFromView.findViewById(R.id.slider_percentage_attendance)).setText(taskData.get("toAchieve")+"%");
                                 ((Button)dialogBoxEditTaskFromView.findViewById(R.id.cancel_button_dialogBox)).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         alertAddFormDialogBox.dismiss();
+                                    }
+                                });
+                                goalPercentageAttendance.addOnChangeListener(new Slider.OnChangeListener() {
+                                    @Override
+                                    public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                                        ((TextView)dialogBoxEditTaskFromView.findViewById(R.id.slider_percentage_attendance)).setText((int)value+"%");
                                     }
                                 });
                                 ((Button)dialogBoxEditTaskFromView.findViewById(R.id.add_task_button_dialogBox)).setOnClickListener(new View.OnClickListener() {
@@ -208,7 +217,7 @@ public class AttendanceManagerTaskListAdapter extends RecyclerView.Adapter<Atten
                                         taskData.put("TaskName",subjectName.getText().toString());
                                         taskData.put("ClassAttended",Long.valueOf(noClassAttendedInt));
                                         taskData.put("classTotal",Long.valueOf(noClassTotalInt));
-                                        taskData.put("toAchieve",Long.valueOf((int)((Slider)dialogBoxEditTaskFromView.findViewById(R.id.to_achieve_attendance_slider)).getValue()));
+                                        taskData.put("toAchieve",Long.valueOf((int)goalPercentageAttendance.getValue()));
                                         alertAddFormDialogBox.dismiss();
                                         notifyItemChanged(position);
                                         updateJsonFile(taskListArray.toJSONString(),context);
