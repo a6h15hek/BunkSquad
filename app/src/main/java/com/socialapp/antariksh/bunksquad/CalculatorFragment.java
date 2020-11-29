@@ -22,13 +22,15 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 
 public class CalculatorFragment extends Fragment {
     private int[] numericButtons = {R.id.calBtn0,R.id.calBtn1,R.id.calBtn2,R.id.calBtn3,R.id.calBtn4,
             R.id.calBtn5,R.id.calBtn6,R.id.calBtn7,R.id.calBtn8,R.id.calBtn9};
     private TextView AttendedClassTextBox;
     private TextView totalClassTextBox;
-    private TextView SelectedTextView;
+    private TextView SelectedTextView,allClearButton;
     View view; //To get the view of layout to get id of element of layout
 
     private boolean lastNumeric; //Represent whether last digit is numeric or not
@@ -54,11 +56,22 @@ public class CalculatorFragment extends Fragment {
         this.view = getView();
         this.totalClassTextBox = (TextView) view.findViewById(R.id.inputBoxTotal);
         this.AttendedClassTextBox = (TextView) view.findViewById(R.id.inputBoxAttended);
+        this.allClearButton = (TextView) view.findViewById(R.id.allClearButton);
         this.SelectedTextView=AttendedClassTextBox;
         setColorSelectedTexBox(R.id.textInputBoxAttendedClass,R.id.attendedTitle,"#3419ac",
                 R.id.textInputBoxTotalClass,R.id.totalTitle,"#4f5354");
         setNumericButtonOnClickListener();
         setActionButtonOnClickListner();
+        allClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setColorSelectedTexBox(R.id.textInputBoxAttendedClass,R.id.attendedTitle,"#3419ac",
+                        R.id.textInputBoxTotalClass,R.id.totalTitle,"#4f5354");
+                SelectedTextView = AttendedClassTextBox;
+                totalClassTextBox.setText("");
+                AttendedClassTextBox.setText("");
+            }
+        });
     }
 
     //On Numeric value click Listener activates a function

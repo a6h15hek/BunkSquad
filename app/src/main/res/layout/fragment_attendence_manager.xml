@@ -41,13 +41,7 @@
                     android:orientation="horizontal"
                     android:layout_alignParentRight="true"
                     android:layout_marginHorizontal="10dp">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_info_24dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        />
+
                 </LinearLayout>
             </RelativeLayout>
             <ProgressBar

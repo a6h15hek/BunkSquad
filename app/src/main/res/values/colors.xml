@@ -5,6 +5,7 @@
     <color name="colorAccent">#5383d3</color>
     <color name="colorMainScreenWhite">#f5f5f5</color>
 
+
     <color name="colorLogoPrimary">#ffffff</color>
     <color name="colorLogoSecondary">#5383d3</color>
     <color name="colorHeaderBackground">#292c2f</color>
@@ -43,6 +44,7 @@
 
     <color name="colorPurpleShadeWhite">#EEEEFF</color>
     <color name="colorRedShadeWhite">#ffe4e1</color>
+    <color name="colorBlueShadeWhite">#c5d0f4</color>
 
     <color name="secondLayerOfWhite">#fDfDfD</color>
     

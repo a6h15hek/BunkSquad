@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
+<!--        <item name="android:windowDisablePreview">true</item>-->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -29,10 +30,10 @@
 
     <style name="numberButtonCalculator">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_height">match_parent</item>
         <!---<item name="android:background">@color/colorCalculatorButtonCal</item>-->
         <item name="android:background">@drawable/cal_btn_click_effect</item>
-        <item name="android:textSize">32dp</item>
+        <item name="android:textSize">34dp</item>
         <item name="android:textColor">@color/colorCalculatorButtonText</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">3dp</item>
@@ -41,7 +42,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@drawable/cal_btn_click_effect</item>
-        <item name="android:textSize">32dp</item>
+        <item name="android:textSize">36dp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorCalculatorButtonText</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">3dp</item>
@@ -52,7 +54,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">0.5</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:padding">14dp</item>
+        <item name="android:padding">12dp</item>
         <item name="android:layout_margin">5dp</item>
     </style>
     <style name="TextInputInCalculator">
@@ -75,5 +77,17 @@
         <!-- Gets rid of the search icon -->
         <item name="searchIcon">@color/textColorWhite</item>
 
+    </style>
+    <style name="easyStepsLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash_screen</item>
     </style>
 </resources>

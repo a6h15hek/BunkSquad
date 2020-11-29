@@ -34,6 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="10dp">
             <TextView
+                android:id="@+id/allClearButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -43,14 +44,6 @@
                 android:layout_marginRight="15dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"/>
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_info_24dp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                 />
         </LinearLayout>
 
     </RelativeLayout>
@@ -93,7 +86,7 @@
             android:layout_height="0dp">
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/snackbar_message"
                 tools:ignore="MissingConstraints">
 
@@ -105,29 +98,29 @@
             android:layout_height="0dp"
             android:orientation="horizontal"
             android:layout_weight="23">
-           <LinearLayout
-               android:id="@+id/textInputBoxAttendedClass"
-               style="@style/textBoxCalculator"
-               android:orientation="vertical">
-               <TextView
-                   android:id="@+id/attendedTitle"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Attended"
+            <LinearLayout
+                android:id="@+id/textInputBoxAttendedClass"
+                style="@style/textBoxCalculator"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/attendedTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attended"
                     android:layout_marginTop="-5dp"/>
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:gravity="center"
-                   android:layout_margin="9dp"
-                   android:orientation="vertical">
-                   <TextView
-                       android:id="@+id/inputBoxAttended"
-                       style="@style/TextInputInCalculator"
-                       android:text=""
-                       android:maxLength="3" />
-               </LinearLayout>
-           </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_margin="9dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/inputBoxAttended"
+                        style="@style/TextInputInCalculator"
+                        android:text=""
+                        android:maxLength="3" />
+                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/textInputBoxTotalClass"
                 style="@style/textBoxCalculator"
@@ -153,7 +146,7 @@
         </LinearLayout>
 
         <!--58 percent of screen-->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="58"
@@ -163,24 +156,27 @@
             <!--key layout structure-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentBottom="true">
+                android:layout_height="match_parent"
+                android:weightSum="100"
+                android:orientation="vertical">
 
                 <!--section of buttons-first section-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="50"
                     android:orientation="horizontal">
                     <!--contains the 75% of row-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="0.75"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:weightSum="100"
                         android:orientation="vertical">
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="50"
                             android:orientation="horizontal">
                             <Button
                                 android:id="@+id/calBtn7"
@@ -200,7 +196,8 @@
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="50"
                             android:orientation="horizontal">
                             <Button
                                 android:id="@+id/calBtn4"
@@ -237,17 +234,20 @@
                 <!--section of buttons-first section-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="50"
                     android:orientation="horizontal">
                     <!--contains the 75% of row-->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="0.75"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:weightSum="100"
                         android:orientation="vertical">
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="50"
                             android:orientation="horizontal">
                             <Button
                                 android:id="@+id/calBtn1"
@@ -267,7 +267,8 @@
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="50"
                             android:orientation="horizontal">
                             <Button
                                 android:id="@+id/calBtn0"
@@ -295,7 +296,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
 

@@ -63,7 +63,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         notificationIntent.putExtra("FRAGMENT","AM");
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.test_insert_emoticon_black_24dp)
+                .setSmallIcon(R.drawable.bunksquad_logo)
                 .setContentTitle("Mark your Attendance now")
                 .setContentText("Click here to mark today's attendance.")
                 .setContentIntent(pendingIntent)

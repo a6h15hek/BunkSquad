@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -17,12 +21,14 @@ import java.util.List;
 
 
 public class BunksquadMainActivity extends AppCompatActivity {
+    private String CLOUD_NOTIFICATION_CHANNEL_ID = "cloudbunksquad2341";
     BottomNavigationView mainBottomNavigation;
     Fragment fragmentToOpen=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bunksquad_main);
+        createNotificationChannel();
         mainBottomNavigation=findViewById(R.id.mainScreenBottomNavigation);
         mainBottomNavigation.setOnNavigationItemSelectedListener(menuItemClickListener);
 
@@ -44,8 +50,8 @@ public class BunksquadMainActivity extends AppCompatActivity {
                 fragmentToOpen=new VotingFragment(params.get(0));
             }
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainScreenContent,
-                fragmentToOpen).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainScreenContent, fragmentToOpen).commit();
 
     }
 
@@ -79,8 +85,8 @@ public class BunksquadMainActivity extends AppCompatActivity {
                             break;
                     }
                     previousSelectedItem = item;
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainScreenContent,
-                            selectedFragment).commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainScreenContent, selectedFragment).commit();
                     return true;
                 }
             };
@@ -91,6 +97,21 @@ public class BunksquadMainActivity extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private void createNotificationChannel() {
+        Log.d("abhishek", "createNotificationChannel: notification channel created ");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Social BunkSquad";
+            String description = "Updates of Voting.";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CLOUD_NOTIFICATION_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

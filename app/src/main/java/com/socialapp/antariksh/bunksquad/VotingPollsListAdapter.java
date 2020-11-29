@@ -196,24 +196,32 @@ public class VotingPollsListAdapter extends FirestoreRecyclerAdapter<VotingPollD
     }
     private void setHeightOfOptionList(int noOfOption, LinearLayout optionLayout){
         LinearLayout.LayoutParams param= (LinearLayout.LayoutParams) optionLayout.getLayoutParams();
-        switch (noOfOption){
-            case 2:
-                param.height=175;
-                break;
-            case 3:
-                param.height=255;
-                break;
-            case 4:
-                param.height=325;
-                break;
-            case 5:
-                param.height=405;
-                break;
-            default:
-                param.height=0;
-                break;
+        if(noOfOption>1&&noOfOption<6){
+           param.height = dpToPx(noOfOption*37);
         }
+//        switch (noOfOption){
+//            case 2:
+//                param.height=175;
+//                break;
+//            case 3:
+//                param.height=255;
+//                break;
+//            case 4:
+//                param.height=325;
+//                break;
+//            case 5:
+//                param.height=405;
+//                break;
+//            default:
+//                param.height=0;
+//                break;
+//        }
     }
+    public int dpToPx(int dp) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
+    }
+
     @NonNull
     @Override
     public PollsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

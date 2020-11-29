@@ -171,7 +171,8 @@ public class VotingPollDetailReport extends AppCompatActivity {
                 if (snapshot != null && snapshot.exists()) {
                     groupDoesNotExistView.setVisibility(View.GONE);
                     Map<String, Object> groupData = snapshot.getData();
-
+                    Log.d("abhishek", "onEvent: size" +((List<Object>)groupData.get("Member")).size() );
+                    Log.d("abhishek", "onEvent: size" +intentData.getIntegerArrayListExtra("numberOfVotesArray"));
                     PieDataSet pieDataSet = new PieDataSet(setPieChartData(intentData.getIntegerArrayListExtra("numberOfVotesArray"),intentData.getStringArrayListExtra("optionName"),((List<Object>)groupData.get("Member")).size()),"");
                     int[] tempColorArray = Arrays.copyOfRange(colorArray, 0, ((List<Integer>) intentData.getIntegerArrayListExtra("numberOfVotesArray")).size()+1);
                     tempColorArray[((List<Integer>) intentData.getIntegerArrayListExtra("numberOfVotesArray")).size()]= Color.parseColor("#4f5354");

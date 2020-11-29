@@ -52,13 +52,6 @@
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:src="@drawable/ic_user" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:src="@drawable/ic_info_24dp" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -73,21 +66,13 @@
                 <!--Not logged in state Layout-->
                 <LinearLayout
                     android:id="@+id/not_login_stat_layout"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="100">
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="90">
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="10"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:layout_margin="10dp">
@@ -112,6 +97,123 @@
                             android:backgroundTint="@color/colorAccent"
                             />
                     </LinearLayout>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginHorizontal="6dp">
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:background="#c0c0c0"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginVertical="10dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginHorizontal="2dp"
+                                    android:textSize="15dp"
+                                    android:text="BunkSquad helps you to vote that can be used to help people to easily determine the opinion of a group on some issue"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="10dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="44dp"
+                                    android:gravity="center"
+                                    android:text="Easy steps"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="24dp" />
+                            </LinearLayout>
+                            <LinearLayout  style="@style/easyStepsLinearLayout"
+                                android:background="#e53935">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_steps_create_user"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:text="Create Account"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                            <LinearLayout  style="@style/easyStepsLinearLayout"
+                                android:background="#8d4de9">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_steps_create_group"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:text="Create Group &amp; Share Invitation Link"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                            <LinearLayout  style="@style/easyStepsLinearLayout"
+                                android:background="#ffb200">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_steps_share_inivitaion"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:text="or Join Group through Invitation Link"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout  style="@style/easyStepsLinearLayout"
+                                android:background="#5bb381">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_steps_create_polls"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:text="Create BunkSquad Polls"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                            <LinearLayout  style="@style/easyStepsLinearLayout"
+                                android:background="#FF007F">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_steps_get_result"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:text="Check Result in Real Time"
+                                    android:textColor="#ffffff"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </ScrollView>
                 </LinearLayout>
                 <!--End Not logged in state Layout-->
                 <LinearLayout
@@ -151,77 +253,85 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/userLoggedInLayout"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    android:descendantFocusability="blocksDescendants">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="4dp"
-                        android:layout_marginHorizontal="12dp"
-                        android:textSize="18dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textStyle="bold"
-                        android:text="Polls"/>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/pollsRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:descendantFocusability="blocksDescendants"
-                        />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <LinearLayout
-                        android:id="@+id/NoPollsExist"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:background="@color/colorPurpleShadeWhite"
-                        android:visibility="gone">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:focusableInTouchMode="true"
+                        android:focusable="true"
+                        android:descendantFocusability="blocksDescendants">
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="No Polls. Create new Poll."
-                            android:textColor="@color/calResultChartBgPurple"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="4dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:textAlignment="center"
                             android:textSize="18dp"
-                            android:gravity="center"/>
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"
+                            android:text="◅ Polls ▻"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/pollsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:descendantFocusability="blocksDescendants"
+                            />
+                        <LinearLayout
+                            android:id="@+id/NoPollsExist"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_margin="10dp"
+                            android:background="@color/colorPurpleShadeWhite">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="no more polls"
+                                android:textColor="@color/calResultChartBgPurple"
+                                android:textSize="18dp"
+                                android:gravity="center"/>
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="15dp">
-                    <TextView
-                        android:id="@+id/testText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="4dp"
-                        android:layout_marginHorizontal="12dp"
-                        android:textSize="18dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textStyle="bold"
-                        android:text="Groups"/>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/groupList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                     <LinearLayout
-                        android:id="@+id/NoGroupPresent"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:background="@color/colorPurpleShadeWhite"
-                        android:visibility="gone">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="15dp">
                         <TextView
+                            android:id="@+id/testText"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="No Group. Create new Group."
-                            android:textColor="@color/calResultChartBgPurple"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="4dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:textAlignment="center"
                             android:textSize="18dp"
-                            android:gravity="center"/>
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"
+                            android:text="◅ Groups  ▻"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/groupList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:id="@+id/NoGroupPresent"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_margin="10dp"
+                            android:background="@color/colorPurpleShadeWhite"
+                            android:visibility="gone">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="No Group. Create new Group."
+                                android:textColor="@color/calResultChartBgPurple"
+                                android:textSize="18dp"
+                                android:gravity="center"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

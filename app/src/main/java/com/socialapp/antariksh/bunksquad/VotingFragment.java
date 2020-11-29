@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.media.Image;
@@ -38,6 +39,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
@@ -80,7 +82,7 @@ public class VotingFragment extends Fragment {
     private View view;
     private SwipeRefreshLayout swipeRefreshMassBunkLayout;
     //view variable initialize
-    private LinearLayout notLoginLayout;
+    private LinearLayout notLoginLayout,userLoggedInLayout;
     private ImageView UserProfileIcon;
     private LinearLayout loadingProgressBar,usernameNotFoundLayout,NoGroupPresent;
     private View dialogBoxCreateGroupFromView;
@@ -97,6 +99,7 @@ public class VotingFragment extends Fragment {
     List<Object> groupArray;
     private String joinGroupToken=null;
     private List<String> groupIdList;
+    private SharedPreferences sharedPref;
 
     private FirebaseFirestore fireStoreDB;
     private FirebaseUser BunkSquadUser;
@@ -130,11 +133,12 @@ public class VotingFragment extends Fragment {
         usernameNotFoundLayout=view.findViewById(R.id.usernameNotFoundErrorLayout);
         NoGroupPresent=view.findViewById(R.id.NoGroupPresent);
         notLoginLayout=view.findViewById(R.id.not_login_stat_layout);
+        userLoggedInLayout = view.findViewById(R.id.userLoggedInLayout);
         //initialize data view variable;
         groupListRecyclerView=view.findViewById(R.id.groupList);
         pollsListRecyclerView = view.findViewById(R.id.pollsRecyclerView);
         groupIdList = new ArrayList<String>();
-
+        sharedPref = getActivity().getSharedPreferences("environmentalVariable",getActivity().MODE_PRIVATE);
         //initialize firebase variable
         BunkSquadUser=FirebaseAuth.getInstance().getCurrentUser();
         setInitialFunctions();
@@ -217,6 +221,10 @@ public class VotingFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     List<Object> memberList= (List<Object>) GroupDataForJoinLink.get("Member");
+                    if(memberList.size()>100){
+                        Snackbar.make(view,"Group is already full.",Snackbar.LENGTH_LONG).show();
+                        return;
+                    }
                     for(int i=0;i<memberList.size();i++){
                         Map<String,Object> memberInfo= (Map<String, Object>) memberList.get(i);
                         if(memberInfo.get("Id").equals(BunkSquadUser.getUid())){
@@ -240,6 +248,7 @@ public class VotingFragment extends Fragment {
                     members.put("name",BunkSquadUser.getDisplayName());
                     members.put("Id",BunkSquadUser.getUid());
                     members.put("role","member");
+                    members.put("registerToken",sharedPref.getString("device_register_token",null));
 
                     Map<String, Object> tempGroupUpdate = new HashMap<>();
                     tempGroupUpdate.put("memberId",FieldValue.arrayUnion(BunkSquadUser.getUid()));//adding an array of membersId array
@@ -274,6 +283,7 @@ public class VotingFragment extends Fragment {
 
                 UserProfileIcon.setVisibility(View.VISIBLE);
                 notLoginLayout.setVisibility(View.GONE);
+                userLoggedInLayout.setVisibility(View.VISIBLE);
                 mainFloatingActionMenu.setVisibility(View.VISIBLE);
                 //main code goes here
                 fireStoreDB=FirebaseFirestore.getInstance();
@@ -288,6 +298,7 @@ public class VotingFragment extends Fragment {
             }
         }else{
             notLoginLayout.setVisibility(View.VISIBLE);
+            userLoggedInLayout.setVisibility(View.GONE);
             UserProfileIcon.setVisibility(View.GONE);
             mainFloatingActionMenu.setVisibility(View.GONE);
         }
@@ -340,6 +351,36 @@ public class VotingFragment extends Fragment {
                 }
                 if (snapshot != null && snapshot.exists()) {
                     UserInfo= snapshot.getData();
+                    //checking if register token is present or not
+                    String locallyStoredRegisterToken = sharedPref.getString("device_register_token","NO_TOKEN");
+                    if(UserInfo.get("registerToken") == null){
+                        UserDocRef.update("registerToken",locallyStoredRegisterToken)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            //Toast.makeText(getActivity(),"notification set.",Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }else{
+                        if(!(UserInfo.get("registerToken")).equals(locallyStoredRegisterToken)){
+                            UserDocRef.update("registerToken",locallyStoredRegisterToken)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                //Toast.makeText(getActivity(),"notification set.",Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                Toast.makeText(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+
                     usernameNotFoundLayout.setVisibility(View.GONE);
                     if(UserInfo.get("Groups")!=null){
                         groupArray = (List<Object>) UserInfo.get("Groups");
@@ -490,6 +531,7 @@ public class VotingFragment extends Fragment {
                             members.put("name",BunkSquadUser.getDisplayName());
                             members.put("Id",BunkSquadUser.getUid());
                             members.put("role","admin");
+                            members.put("registerToken",sharedPref.getString("device_register_token","NO_TOKEN"));
 
                         group.put("Member",FieldValue.arrayUnion(members));//adding member objects in array of member present in group
 

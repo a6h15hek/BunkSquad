@@ -12,6 +12,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ public class  VotingGroupActivity extends AppCompatActivity {
     private FirebaseFirestore fireStoreDB;
     private DocumentReference GroupDocRef;
     private DocumentReference CurrentUserRef;
+    private SharedPreferences sharedPref;
 
     private Map<String,Object> GroupInfo;
     private Map<String ,Object> currentUserInfo;
@@ -75,6 +77,7 @@ public class  VotingGroupActivity extends AppCompatActivity {
         deletedGroupLayout=findViewById(R.id.deletedGroupLayout);
         noOfParticipant = findViewById(R.id.noOfParticipant);
 
+        sharedPref = getSharedPreferences("environmentalVariable",MODE_PRIVATE);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         fireStoreDB=FirebaseFirestore.getInstance();
         GroupDocRef=fireStoreDB.collection("BunkSquadGroups").document(getIntent().getStringExtra("groupId"));
@@ -115,11 +118,28 @@ public class  VotingGroupActivity extends AppCompatActivity {
                                     if(!currentUserInfo.get("name").equals(firebaseUser.getDisplayName())){
                                         //change the name of user in group if not same
                                         memberArrayInfoMap.get(i).put("name",firebaseUser.getDisplayName());
+
                                         GroupDocRef.update("Member",memberArrayInfoMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()){
                                                     Snackbar.make(findViewById(android.R.id.content),"name updated in group.",Snackbar.LENGTH_SHORT).show();
+                                                }else{
+                                                    Toast.makeText(VotingGroupActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                    String locallyStoredRegisterToken = sharedPref.getString("device_register_token","NO_TOKEN");
+                                    if(!currentUserInfo.get("registerToken").equals(locallyStoredRegisterToken)){
+                                        //change the name of user in group if not same
+                                        memberArrayInfoMap.get(i).put("registerToken",locallyStoredRegisterToken);
+
+                                        GroupDocRef.update("Member",memberArrayInfoMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    Snackbar.make(findViewById(android.R.id.content),"Notification Updated.",Snackbar.LENGTH_SHORT).show();
                                                 }else{
                                                     Toast.makeText(VotingGroupActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                                 }
