@@ -141,14 +141,16 @@ public class AttendenceManagerFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setDailyMarkingRemainder(){
-        Log.i("abhishek1","set Daily remainder");
         int hour = sharedPref.getInt("savedHour", Integer.parseInt(getResources().getString(R.string.hourOfDay)));
         int min = sharedPref.getInt("savedMinute", Integer.parseInt(getResources().getString(R.string.minute)));
+
         Calendar calNow=Calendar.getInstance();
         Calendar calSet = (Calendar) calNow.clone();
+
         calSet.set(Calendar.HOUR_OF_DAY, hour);
         calSet.set(Calendar.MINUTE, min);
         calSet.set(Calendar.SECOND, 0);
+
         if (calSet.compareTo(calNow) <= 0) {
             //Today Set time passed, count to tomorrow
             calSet.add(Calendar.DATE, 1);
@@ -157,10 +159,9 @@ public class AttendenceManagerFragment extends Fragment {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),NOTIFICATION_REQUEST_CODE,intent,0);
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         //alarmManager.set(AlarmManager.RTC_WAKEUP,calSet.getTimeInMillis(),pendingIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calSet.getTimeInMillis(),86400000,pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calSet.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }
     public void cancelDailyMarkingRemainder(){
-        Log.i("abhishek1","cancel daily remainder");
         Intent intent = new Intent(getActivity(), NotificationPublisher.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),NOTIFICATION_REQUEST_CODE,intent,0);
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);

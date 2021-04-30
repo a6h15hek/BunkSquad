@@ -3,10 +3,16 @@
     android:opacity="opaque">
     <item android:drawable="@color/colorPrimary" />
     <item
-        android:left="200dp"
-        android:right="200dp">
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/bunksquad_logo" />
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="center"
+        android:drawable="@drawable/bunksquad_logo"
+        >
+    </item>
+    <item
+        android:bottom="60dp"
+        android:gravity="bottom|center_horizontal"
+        android:drawable="@drawable/splashscreentext"
+        >
     </item>
 </layer-list>

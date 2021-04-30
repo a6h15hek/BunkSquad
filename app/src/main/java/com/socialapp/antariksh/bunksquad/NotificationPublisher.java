@@ -21,11 +21,9 @@ import androidx.core.app.NotificationManagerCompat;
 public class NotificationPublisher extends BroadcastReceiver {
 
     private static final String CHANNEL_ID ="attendanceManager198" ;
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onReceive(Context context, Intent intent) {
-       Log.i("abhishek1","new Notification triggered");
         SharedPreferences sharedPref=context.getSharedPreferences("dailyRemainderFile",context.MODE_PRIVATE);
         Calendar tempcal=Calendar.getInstance();
         switch (tempcal.get(Calendar.DAY_OF_WEEK)){
