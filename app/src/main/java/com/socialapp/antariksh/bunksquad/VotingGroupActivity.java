@@ -40,6 +40,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.List;
@@ -279,7 +280,9 @@ public class  VotingGroupActivity extends AppCompatActivity {
                             if(document.exists()){
                                 List<Map<String,Object>> group=(List<Map<String,Object>>)document.get("Groups");
                                 for(int i=0;i<group.size();i++){
+
                                     if(group.get(i).get("Id").equals(getIntent().getStringExtra("groupId"))){
+                                        final String groupId = (String) group.get(i).get("Id");
                                         group.remove(i);
                                         batch.update(CurrentUserRef,"Groups",group);
                                         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -288,6 +291,15 @@ public class  VotingGroupActivity extends AppCompatActivity {
                                                 deletedGroupLayout.setVisibility(View.GONE);
                                                 if(task.isSuccessful()){
                                                     Snackbar.make(findViewById(android.R.id.content),"Group Deleted.",Snackbar.LENGTH_SHORT).show();
+                                                    FirebaseMessaging.getInstance().unsubscribeFromTopic(groupId)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if(task.isSuccessful()){
+                                                                        Snackbar.make(findViewById(android.R.id.content),"You are unsubscribed to topic",Snackbar.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
                                                 }else{
                                                     Toast.makeText(VotingGroupActivity.this,"Cannot delete Group. "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                                 }
@@ -388,14 +400,24 @@ public class  VotingGroupActivity extends AppCompatActivity {
                         List<Map<String,Object>> group=(List<Map<String,Object>>)document.get("Groups");
                         for(int i=0;i<group.size();i++){
                             if(group.get(i).get("Id").equals(GroupDocRef.getId())){
+                                final String groupId = (String) group.get(i).get("Id");
                                 group.remove(i);
                                 batch.update(CurrentUserRef,"Groups",group);
                                 batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
-                                            finish();
                                             Snackbar.make(findViewById(android.R.id.content),"Group Deleted",Snackbar.LENGTH_SHORT).show();
+                                            FirebaseMessaging.getInstance().unsubscribeFromTopic(groupId)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if(task.isSuccessful()){
+                                                                Snackbar.make(findViewById(android.R.id.content),"You are unsubscribed to topic",Snackbar.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
+                                            finish();
                                         }else{
                                             Toast.makeText(VotingGroupActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                         }
@@ -447,14 +469,24 @@ public class  VotingGroupActivity extends AppCompatActivity {
                                                 List<Map<String,Object>> group=(List<Map<String,Object>>)document.get("Groups");
                                                 for(int i=0;i<group.size();i++){
                                                     if(group.get(i).get("Id").equals(GroupDocRef.getId())){
+                                                        final String groupId = (String) group.get(i).get("Id");
                                                         group.remove(i);
                                                         batch.update(CurrentUserRef,"Groups",group);
                                                         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if(task.isSuccessful()){
+                                                                    FirebaseMessaging.getInstance().unsubscribeFromTopic(groupId)
+                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                    if(task.isSuccessful()){
+                                                                                        Snackbar.make(findViewById(android.R.id.content),"You are unsubscribed to topic",Snackbar.LENGTH_SHORT).show();
+                                                                                    }
+                                                                                }
+                                                                            });
                                                                     finish();
-                                                                    Snackbar.make(findViewById(android.R.id.content),"Group Name updated.",Snackbar.LENGTH_SHORT).show();
+                                                                    Snackbar.make(findViewById(android.R.id.content),"You leaved the group.",Snackbar.LENGTH_SHORT).show();
                                                                 }else{
                                                                     Toast.makeText(VotingGroupActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                                                 }

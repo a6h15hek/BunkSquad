@@ -61,6 +61,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.firestore.auth.User;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -262,6 +263,15 @@ public class VotingFragment extends Fragment {
                             alertJoinGroupBox.dismiss();
                             if(task.isSuccessful()){
                                 Snackbar.make(view,"You are added in group.",Snackbar.LENGTH_SHORT).show();
+                                FirebaseMessaging.getInstance().subscribeToTopic(groupDoc.getId())
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    Snackbar.make(view,"You are subscribed to receive notification.",Snackbar.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                             }else{
                                 Toast.makeText(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                             }
@@ -535,7 +545,7 @@ public class VotingFragment extends Fragment {
 
                         group.put("Member",FieldValue.arrayUnion(members));//adding member objects in array of member present in group
 
-                        DocumentReference groupDoc = fireStoreDB.collection("BunkSquadGroups")
+                        final DocumentReference groupDoc = fireStoreDB.collection("BunkSquadGroups")
                                 .document();
                         group.put("joinLink",groupDoc.getId()+String.valueOf((new Random()).nextInt(90000) + 10000));
                         batch.set(groupDoc,group);//now updating the document
@@ -556,6 +566,15 @@ public class VotingFragment extends Fragment {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
                                     Snackbar.make(view,"Group Created Successfully.",Snackbar.LENGTH_SHORT).show();
+                                    FirebaseMessaging.getInstance().subscribeToTopic(groupDoc.getId())
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        Snackbar.make(view,"You are subscribed to receive notification.",Snackbar.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                 }else{
                                     Toast.makeText(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                 }
